@@ -3,6 +3,7 @@ const app = express()  ;
 const dotenv = require("dotenv") ;
 const {connectDB} = require('./config/connection');
 const router = require("./routes/routes");
+const staticURL = require("./routes/staticURL");
 const {model } = require("./model/urlModel") ;
 //load dotenv
 dotenv.config() ;
@@ -11,15 +12,15 @@ const port = process.env.PORT ;
 //connect db
 connectDB(process.env.MONGODB_URL) ;
 
+//set EJS
+app.set('view engine', 'ejs') ;
+
 //parse json data
 app.use(express.json()) ;
 app.use(express.urlencoded({extended:true})) ;
 
-app.get("/", (req, res)=>{
-    res.send ("Hello world") ;
-    res.end(); 
-})
-app.get("/:id", async(req, res) =>{
+
+app.get("/redirect/:id", async(req, res) =>{
     const url = req.params.id ;
     a = await model.findOneAndUpdate(
         {shortURL: url} ,
@@ -31,8 +32,8 @@ app.get("/:id", async(req, res) =>{
     ) ;
     res.redirect(a.redirectURL) ;   
 } ) ;
-
 app.use("/url", router) ;
+app.use("/", staticURL)
 
 //listen
 app.listen(port , (err)=>{

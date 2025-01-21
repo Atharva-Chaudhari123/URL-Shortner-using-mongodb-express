@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <style>
+               * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #718096;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        input[type="url"], input[type="text"] {
+            padding: 0.75rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        input[type="url"]:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background: #5a67d8;
+        }
+
+        .result-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e2e8f0;
+            display: block;
+        }
+
+        .result-section.visible {
+            display: block;
+        }
+
+        .copy-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .copy-group input {
+            flex: 1;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .copy-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>URL Shortener</h1>
+            <p>Paste your long URL and get a short link instantly</p>
+        </div>
+        <form method="POST" action="/url">
+            <div class="input-group">
+                <label for="url">Enter your URL</label>
+                <input 
+                    type="url" 
+                    id="url" 
+                    name="url" 
+                    placeholder="https://www.example.com/very-long-url"
+                    required
+                />
+            </div>
+            <button type="submit">Shorten URL</button>
+        </form>
+        <% if( data.url!=="") { %>
+            <div class="result-section">
+                <div class="input-group">
+                    <label for="shortUrl">Your shortened URL</label>
+                    <div class="copy-group">
+                        <input 
+                            type="text" 
+                            id="shortUrl" 
+                            value="<%= data.url %>"
+                            readonly
+                        />
+                        <button id="copyButton" onclick="copyToClipboard()">Copy</button>
+                    </div>
+                </div>
+            </div>
+
+        <% }  else {%>
+            
+        <% } %>
+    </div>
+    <script>
+        function copyToClipboard(event){
+            const url = document.getElementById("shortUrl") ;
+            navigator.clipboard.writeText(url.value) ;
+            btn = document.getElementById("copyButton") ;
+            btn.textContent = "Copied☑️" ;
+        }
+    </script>
+</body> 
+</html>

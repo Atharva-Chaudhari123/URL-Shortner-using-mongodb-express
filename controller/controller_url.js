@@ -11,11 +11,10 @@ const handleGenerateShortURL = async (req, res)=>{
             redirectURL  : req.body.url ,
             visitHistory : [],
         }) ;
-
-        res.json({
-            success :  true ,
-            shortID : shortID
-        });
+        const data = {
+            url :  `http://localhost:3000/redirect/${shortID}`
+        }
+        res.render("home", {data }) ;
     }catch(err){
         console.log("Error occured" , err) ;
         res.status(500).json({
