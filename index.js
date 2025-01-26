@@ -10,7 +10,7 @@ dotenv.config() ;
 const port = process.env.PORT ;
 
 //connect db
-connectDB(process.env.MONGODB_URL) ;
+connectDB(process.env.connection) ;
 
 //set EJS
 app.set('view engine', 'ejs') ;
