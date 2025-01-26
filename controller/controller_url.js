@@ -12,7 +12,7 @@ const handleGenerateShortURL = async (req, res)=>{
             visitHistory : [],
         }) ;
         const data = {
-            url :  `https://url-shortner-using-mongodb-express.onrender.com/redirect/${shortID}`
+            url :  `https:localhost:3000/redirect/${shortID}`
         }
         res.render("home", {data }) ;
     }catch(err){

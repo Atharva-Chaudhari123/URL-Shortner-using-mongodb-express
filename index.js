@@ -7,11 +7,11 @@ const staticURL = require("./routes/staticURL");
 const {model } = require("./model/urlModel") ;
 //load dotenv
 dotenv.config() ;
-const port = process.env.PORT ;
+const port = process.env.PORT || 3000;
 
 //connect db
 connectDB(process.env.connection) ;
-
+console.log(process.env.connection)
 //set EJS
 app.set('view engine', 'ejs') ;
 
